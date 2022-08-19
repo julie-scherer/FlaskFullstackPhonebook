@@ -13,8 +13,7 @@ from app.static.states import States
 def home():
     return render_template('home.html')
 
-
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 @app.route('/register', methods=["GET","POST"])
 def register():
     if current_user.is_authenticated:
@@ -37,8 +36,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html',form=form)
 
-
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 @app.route('/login', methods=["GET","POST"])
 def login():
     if current_user.is_authenticated:
@@ -54,19 +52,16 @@ def login():
             flash(f"Login Unsuccessful. Please check username and password.", 'danger')
     return render_template('login.html',form=form)
 
-
-
 @app.route("/logout")
 def logout():
     logout_user()
-    flash(f"Logged out successfully",'success')
+    flash(f"Logged out successfully",'info')
     return redirect(url_for('home'))
 
-
-
-@app.route('/phonebook', methods=["GET","POST"])
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@app.route('/account', methods=["GET","POST"])
 @login_required
-def phonebook():
+def account():
     form = AddressForm()
     if form.validate_on_submit():
         print("Form validated")
@@ -86,29 +81,14 @@ def phonebook():
         db.session.add(address)
         db.session.commit()
         flash(f"{address}", 'success')
-        return redirect(url_for('phonebook'))
-    else:
-        print("Form NOT validated")
-    addresses = Address.query.all()
-    return render_template('phonebook.html',form=form, addresses=addresses)
+        return redirect(url_for('account'))
+    return render_template('account.html',form=form)
 
-
-
-@app.route('/phonebook/contact/<address_id>')
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@app.route('/contact/<address_id>/edit', methods=['GET','POST'])
 @login_required
-def view_contact(address_id):
-    address = Address.query.get_or_404(address_id)
-    return render_template('contact.html', address=address)
-
-
-
-@app.route('/phonebook/contact/<address_id>/edit', methods=['GET','POST'])
-@login_required
-def edit_contact(address_id):
+def contact_edit(address_id):
     address_to_edit = Address.query.get_or_404(address_id)
-    if address_to_edit.user != current_user:
-        flash("You do not have permission to edit this post",'danger')
-        return render_template('view_contact.html', address_id=address_id)
     form = AddressForm()
     if form.validate_on_submit():
         # Update the post with data from the form
@@ -122,20 +102,14 @@ def edit_contact(address_id):
             state=form.state.data, 
             zip=form.zip.data
         )
-        flash(f'{address_to_edit.firstname} {address_to_edit.lastname} has been updated', 'success')
-        return redirect(url_for('view_contact', address_id=address_id))
-    return render_template('edit_contact.html', address=address_to_edit, form=form)
-    # return render_template('contact.html', address=address_to_edit)
+        flash(f'{address_to_edit.firstname} {address_to_edit.lastname} has been updated', 'info')
+        return redirect(url_for('account'))
+    return render_template('contact_edit.html', address=address_to_edit, form=form)
 
-
-
-@app.route('/phonebook/contact/<address_id>/delete')
+@app.route('/account/contact/<address_id>/delete')
 @login_required
 def delete_contact(address_id):
     address_to_delete = Address.query.get_or_404(address_id)
-    if address_to_delete.user != current_user:
-        flash('You do not have permission to delete this address', 'danger')
-        return redirect(url_for('home'))
     address_to_delete.delete()
     flash(f"{address_to_delete.firstname} {address_to_delete.lastname} has been deleted", 'info')
-    return redirect(url_for('home'))
+    return redirect(url_for('account'))

@@ -1,0 +1,157 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="content-group">
+        <h2 class="text-center">Edit {{ address.firstname }} {{ address.lastname }}</h5>
+        <p class="text-center">Created:  {{ address.date_created.strftime('%A, %B %d, %Y') }}</p>
+    </div>
+
+    <div class="content-group">
+        <!-- action="" means were going to post info to the same route were currently on -->
+        <form method="POST" action="">  
+            {{ form.csrf_token }}           
+            <fieldset class="form-group row g-3">
+                <legend class="border-bottom mb-4">Edit Contact</legend>
+
+                <div class="form-group col-md-4">
+                    {{ form.firstname.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.firstname.errors %}
+                            {{ form.firstname(class='form-control is-invalid', value=address.firstname) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.firstname.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.firstname(class='form-control', value=address.firstname) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    {{ form.lastname.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.lastname.errors %}
+                            {{ form.lastname(class='form-control is-invalid', value=address.lastname) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.lastname.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.lastname(class='form-control', value=address.lastname) }}
+                        {% endif %}
+                    </div>              
+                </div>
+
+                <div class="form-group col-md-4">
+                    {{ form.phone.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.phone.errors %}
+                            {{ form.phone(class='form-control is-invalid', value=address.phone) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.phone.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.phone(class='form-control', value=address.phone) }}
+                        {% endif %}
+                    </div>      
+                </div>            
+
+                <div class="form-group col-12">
+                    {{ form.street1.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.street1.errors %}
+                        {{ form.street1(class='form-control is-invalid', value=address.street1) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.street1.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form.street1(class='form-control', value=address.street1) }}
+                        {% endif %}
+                    </div>                
+                </div>
+
+                <div class="form-group col-12">
+                    {{ form.street2.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.street2.errors %}
+                        {{ form.street2(class="form-control is-invalid", value=address.street2) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.street2.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form.street2(class="form-control", value=address.street2) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    {{ form.city.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.city.errors %}
+                            {{ form.city(class="form-control is-invalid", value=address.city) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.city.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.city(class="form-control", value=address.city) }}
+                        {% endif %}
+                    </div>                
+                </div>
+
+                <div class="form-group col-md-3">
+                    {{ form.state.label(class="form-control-label") }}
+                    {% if form.state.errors %}
+                        {{ form.state(class="form-control is-invalid", value=address.state) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.state.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.state(class="form-control", value=address.state) }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-md-3">
+                    {{ form.zip.label(class="form-control-label") }}
+                    <div class="form-group">
+                        {% if form.zip.errors %}
+                            {{ form.zip(class="form-control is-invalid", value=address.zip) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.zip.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.zip(class="form-control", value=address.zip) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-dark mt-3") }}
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

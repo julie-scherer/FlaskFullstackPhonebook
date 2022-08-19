@@ -40,7 +40,3 @@ class AddressForm(FlaskForm):
     state = SelectField('State',validators=[InputRequired()],choices=States.state_list)
     zip = StringField('Zip Code',validators=[InputRequired(),Length(min=5,max=10)])
     submit = SubmitField('Submit')
-
-    # def validate_state(self, state):
-    #     if state.data == 'Choose...':
-    #         raise ValidationError("Please enter the state.")

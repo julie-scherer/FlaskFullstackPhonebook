@@ -60,10 +60,10 @@ class Address(db.Model):
         db.session.commit()
     
     def __repr__(self):
-        return f"Address({self.firstname}, {self.lastname}, {self.date_created})"
+        return f"Address({self.firstname}, {self.lastname}, {self.user_id})"
     
     def __str__(self):
-        return f"Address for {self.firstname} {self.lastname} created {self.date_created}"
+        return f"Address for {self.firstname} {self.lastname} created {self.date_created.strftime('%A, %B %d, %Y')}"
 
     def update(self, **kwargs):
         for key, value in kwargs.items():

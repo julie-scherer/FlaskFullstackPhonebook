@@ -1,9 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="container">
 
-<h2 class="text-center">Home Page</h2>
-<p>More content coming soon...</p>
+    {% if current_user.is_authenticated %}
+        <div class="p-5 bg-light">
+            <div class="container">
+                <h1 class="display-3">
+                    <a href="{{ url_for('account') }}" style="text-decoration: none;">Check out your phonebook!</a>
+                </h1>
+                <p class="lead">
+                    Create, update, and delete contacts to keep track of all your friends and family in this ever-changing world!
+                </p>
+                <hr class="my-2">
+                <p>
+                    Please visit your account to view your phonebook
+                </p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('account') }}" role="button">Visit account</a>
+                </p>
+            </div>
+        </div>
+    {% else %}
+        <div class="p-5 bg-light">
+            <div class="container">
+                <h1 class="display-3">
+                    <a href="{{ url_for('register') }}" style="text-decoration: none;">Create your phonebook today!</a>
+                </h1>
+                <p class="lead">
+                    Keep track of all your friends and family in your own personal phonebook and access it anywhere you go!
+                </p>
+                <hr class="my-2">
+                <p>
+                    Already have an account? Login to view and update your phonebook
+                </p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Log In</a>
+                </p>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
 
 
 {% endblock content %}
