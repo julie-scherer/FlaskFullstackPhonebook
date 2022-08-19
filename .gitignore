@@ -3,4 +3,3 @@ run.py
 __pycache__
 migrations-terminal.txt
 .vscode
-app.db
