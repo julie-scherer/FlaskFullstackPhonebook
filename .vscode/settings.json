@@ -1,7 +1,0 @@
-{
-    "files.exclude": {
-        "": true,
-        "__pycache__": true,
-        "**/.git": false
-    }
-}
