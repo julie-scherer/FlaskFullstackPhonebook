@@ -2,7 +2,8 @@
 {% block content %}
 
 <div class="container py-2">
-
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-12">
             <div class="row py-3">
                 <h1 class="display-6 border-bottom border-dark border-3">Account Information</h1>
                 <dt class="col-sm-3">Username</dt>
@@ -14,7 +15,7 @@
 
             <div class="row py-3">
                 <h1 class="display-6 border-bottom border-dark border-3">Add Contact</h1>
-                <div class="content-group col-9">
+                <div class="content-group">
                     <form method="POST" action="">  
                         {{ form.csrf_token }}           
                         <fieldset class="form-group row g-3">
@@ -149,45 +150,48 @@
                             {{ form.submit(class="btn btn-dark mt-3") }}
                         </div>
                     </form>
-                </div>            
+                </div>
             </div>
-            <div class="content-group my-3">
-                <h1 class="display-6 border-bottom border-dark border-3">Phonebook</h1>
-                    {% for address in current_user.addresses %}
-                        <div class="card m-1 border-3">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{{ address.firstname }} {{ address.lastname }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ address.phone }}
-                                    <br>{{ address.street1 }} {{ address.street2 }} 
-                                    <br>{{ address.city }}, {{ address.state }} {{ address.zip }}</h6>
-                                
-                                <div class="d-flex flex-md-row flex-sm-row justify-content-evenly">
-                                    <a href="{{ url_for('contact_edit', address_id=address.id) }}" class="btn btn-success btn-sm w-20">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm w-20" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-                                </div>
-                                
-                                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to delete {{ address.firstname }} {{ address.lastname }}? This action cannot be undone.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <a href="{{ url_for('delete_contact', address_id=address.id) }}" class="btn btn-danger">Delete</a>
-                                            </div>
-                                        </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-3 col-sm-12 my-3">
+            <p class="display-6 text-muted text-center">Phonebook</p>
+            <!-- <legend class="border-bottom">Contacts</legend> -->
+            {% for address in current_user.addresses %}
+                <div class="card m-1 border-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ address.firstname }} {{ address.lastname }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ address.phone }}
+                            <br>{{ address.street1 }} {{ address.street2 }} 
+                            <br>{{ address.city }}, {{ address.state }} {{ address.zip }}</h6>
+                        
+                        <div class="d-flex flex-md-row flex-sm-row justify-content-evenly">
+                            <a href="{{ url_for('contact_edit', address_id=address.id) }}" class="btn btn-success btn-sm w-20">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm w-20" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                        </div>
+                        
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete {{ address.firstname }} {{ address.lastname }}? This action cannot be undone.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="{{ url_for('delete_contact', address_id=address.id) }}" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-            </div>
-    
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>        
 </div>
 
 {% endblock content %}
