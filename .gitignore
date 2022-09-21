@@ -1,5 +1,10 @@
+__pycache__
+.DS_Store
+.vscode
+
 venv
 run.py
-__pycache__
+
+migrations
 migrations-terminal.txt
-.vscode
+flask-migrate.txt
